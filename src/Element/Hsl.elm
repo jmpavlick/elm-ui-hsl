@@ -1,10 +1,68 @@
-module Element.Hsl exposing (hsl, hsla, toRgb)
+module Element.Hsl exposing
+    ( hsl
+    , hsla
+    , fromHsl
+    , fromHsla
+    , toRgb255
+    )
+
+{-| HSL colors for elm-ui.
+
+@docs hsl
+
+@docs hsla
+
+@docs fromHsl
+
+@docs fromHsla
+
+@docs toRgb255
+
+-}
 
 import Element
 
 
-toRgb : { h : Int, s : Float, l : Float } -> { r : Int, g : Int, b : Int }
-toRgb { h, s, l } =
+{-| Create a color from hue, saturation, and lightness.
+-}
+hsl : Int -> Float -> Float -> Element.Color
+hsl h s l =
+    fromHsl { h = h, s = s, l = l }
+
+
+{-| `hsl`, with named parameters. Nice for readability, if you're into that sort of thing.
+-}
+fromHsl : { h : Int, s : Float, l : Float } -> Element.Color
+fromHsl params =
+    let
+        { r, g, b } =
+            toRgb255 params
+    in
+    Element.rgb255 r g b
+
+
+{-| Create a color from hue, saturation, lightness, and alpha (opacity).
+-}
+hsla : Int -> Float -> Float -> Float -> Element.Color
+hsla h s l a =
+    fromHsla { h = h, s = s, l = l, a = a }
+
+
+{-| `hsla`, with named parameters. Nice for readability, if you're into that sort of thing.
+-}
+fromHsla : { h : Int, s : Float, l : Float, a : Float } -> Element.Color
+fromHsla { h, s, l, a } =
+    let
+        { r, g, b } =
+            toRgb255 { h = h, s = s, l = l }
+    in
+    Element.rgba255 r g b a
+
+
+{-| Converts hue, saturation, and lightness to red, green, and blue, with each color represented by integers from `0` - `255`.
+-}
+toRgb255 : { h : Int, s : Float, l : Float } -> { r : Int, g : Int, b : Int }
+toRgb255 { h, s, l } =
     let
         hFloat : Float
         hFloat =
@@ -73,21 +131,3 @@ toRgb { h, s, l } =
         , g = pq 0
         , b = pq (Basics.negate 1 / 3) |> Basics.max 0
         }
-
-
-hsl : { h : Int, s : Float, l : Float } -> Element.Color
-hsl params =
-    let
-        { r, g, b } =
-            toRgb params
-    in
-    Element.rgb255 r g b
-
-
-hsla : { h : Int, s : Float, l : Float, a : Float } -> Element.Color
-hsla { h, s, l, a } =
-    let
-        { r, g, b } =
-            toRgb { h = h, s = s, l = l }
-    in
-    Element.rgba255 r g b a

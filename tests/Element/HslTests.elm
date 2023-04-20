@@ -41,4 +41,4 @@ expectAreEqual ( { h, s, l }, { r, g, b } ) =
         )
     <|
         \() ->
-            Hsl.toRgb { h = h, s = s, l = l } |> Expect.equal { r = r, g = g, b = b }
+            Hsl.toRgb255 { h = h, s = s, l = l } |> Expect.equal { r = r, g = g, b = b }
