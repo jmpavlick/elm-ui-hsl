@@ -129,5 +129,5 @@ toRgb255 { h, s, l } =
     else
         { r = pq (1 / 3)
         , g = pq 0
-        , b = pq (Basics.negate 1 / 3) |> Basics.max 0
+        , b = pq (Basics.negate 1 / 3)
         }
