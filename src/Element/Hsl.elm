@@ -1,10 +1,10 @@
-module Hsl exposing (..)
+module Element.Hsl exposing (hsl, hsla, toRgb)
 
 import Element
 
 
-hslToRgb : { h : Int, s : Float, l : Float } -> { r : Int, g : Int, b : Int }
-hslToRgb { h, s, l } =
+toRgb : { h : Int, s : Float, l : Float } -> { r : Int, g : Int, b : Int }
+toRgb { h, s, l } =
     let
         hFloat : Float
         hFloat =
@@ -55,7 +55,9 @@ hslToRgb { h, s, l } =
 
         pq : Float -> Int
         pq bOffset =
-            toHex <| hueToRgb { p_ = p, q_ = q, t = hFloat + bOffset }
+            hueToRgb { p_ = p, q_ = q, t = hFloat + bOffset }
+                |> toHex
+                |> Basics.max 0
     in
     if s == 0 then
         toHex l
@@ -69,7 +71,7 @@ hslToRgb { h, s, l } =
     else
         { r = pq (1 / 3)
         , g = pq 0
-        , b = pq (Basics.negate 1 / 3)
+        , b = pq (Basics.negate 1 / 3) |> Basics.max 0
         }
 
 
@@ -77,11 +79,15 @@ hsl : { h : Int, s : Float, l : Float } -> Element.Color
 hsl params =
     let
         { r, g, b } =
-            hslToRgb params |> Debug.log "r g b:"
+            toRgb params
     in
-    Element.fromRgb255
-        { red = r
-        , green = g
-        , blue = b
-        , alpha = 1
-        }
+    Element.rgb255 r g b
+
+
+hsla : { h : Int, s : Float, l : Float, a : Float } -> Element.Color
+hsla { h, s, l, a } =
+    let
+        { r, g, b } =
+            toRgb { h = h, s = s, l = l }
+    in
+    Element.rgba255 r g b a
