@@ -71,17 +71,16 @@ toRgb255 { h, s, l } =
         hueToRgb : { p_ : Float, q_ : Float, t : Float } -> Float
         hueToRgb { p_, q_, t } =
             let
-                minT : Float
-                minT =
-                    Basics.min t 1
-
                 t_ : Float
                 t_ =
-                    if minT > 1 then
-                        minT - 1
+                    if t < 0 then
+                        t + 1
+
+                    else if t > 1 then
+                        t - 1
 
                     else
-                        minT
+                        t
             in
             if t_ < 1 / 6 then
                 p_ + (q_ - p_) * 6 * t_

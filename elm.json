@@ -3,7 +3,7 @@
     "name": "jmpavlick/elm-ui-hsl",
     "summary": "HSL colors for elm-ui",
     "license": "MIT",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "exposed-modules": [
         "Element.Hsl"
     ],

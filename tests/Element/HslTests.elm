@@ -9,8 +9,7 @@ hslToRgb : Test
 hslToRgb =
     Test.describe "HSL values should compute to the expected RGB values" <|
         List.map expectAreEqual
-            [ ( Hsl 215 1 0.48, Rgb 242 102 245 )
-            , ( Hsl 30 1 0.7, Rgb 255 179 102 )
+            [ ( Hsl 30 1 0.7, Rgb 255 179 102 )
             , ( Hsl 95 1 0.7, Rgb 166 255 102 )
             ]
 

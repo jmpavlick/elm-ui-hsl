@@ -1,11 +1,13 @@
 {
   "scripts": {
+    "example": "cd example; elm-go src/Main.elm --pushstate -- --debug",
     "preview": "elm-doc-preview",
     "test-watch": "elm-test --watch"
   },
   "dependencies": {
     "elm": "^0.19.1-5",
     "elm-doc-preview": "^5.0.5",
+    "elm-go": "^5.0.19",
     "elm-test": "^0.19.1-revision12"
   }
 }
